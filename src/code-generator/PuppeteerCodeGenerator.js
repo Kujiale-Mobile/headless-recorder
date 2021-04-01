@@ -13,7 +13,13 @@ const wrappedHeader = `(async () => {
   const browser = await puppeteer.launch()
   const page = await browser.newPage()\n`
 
-const wrappedFooter = `  await browser.close()
+const wrappedFooter = `
+  await await page.screenshot({
+    path: './output/${+new Date()}.png',
+    type: 'png',
+    fullPage: true
+  });
+  await browser.close()
 })()`
 
 export default class PuppeteerCodeGenerator extends CodeGenerator {

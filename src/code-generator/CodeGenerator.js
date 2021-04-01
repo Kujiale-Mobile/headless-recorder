@@ -148,7 +148,7 @@ export default class CodeGenerator {
     if (this._options.waitForSelectorOnClick) {
       block.addLine({ type: domEvents.MOUSEDOWN, value: `await ${this._frame}.waitForSelector('${selector}')` })
     }
-    block.addLine({ type: domEvents.CLICK, value: `await ${this._frame}.mousedown()` })
+    block.addLine({ type: domEvents.CLICK, value: `await ${this._frame}.mouse.down()` })
     return block
   }
 
@@ -157,7 +157,7 @@ export default class CodeGenerator {
     if (this._options.waitForSelectorOnClick) {
       block.addLine({ type: domEvents.MOUSEUP, value: `await ${this._frame}.waitForSelector('${selector}')` })
     }
-    block.addLine({ type: domEvents.CLICK, value: `await ${this._frame}.mouseup()` })
+    block.addLine({ type: domEvents.CLICK, value: `await ${this._frame}.mouse.up()` })
     return block
   }
 
@@ -166,7 +166,7 @@ export default class CodeGenerator {
     if (this._options.waitForSelectorOnClick) {
       block.addLine({ type: domEvents.MOUSEMOVE, value: `await ${this._frame}.waitForSelector('${selector}')` })
     }
-    block.addLine({ type: domEvents.CLICK, value: `await ${this._frame}.mousemove(${x},${y})` })
+    block.addLine({ type: domEvents.CLICK, value: `await ${this._frame}.mouse.move(${x},${y})` })
     return block
   }
 

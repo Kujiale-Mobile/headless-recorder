@@ -16,6 +16,7 @@ export default class EventRecorder {
     this._screenShotMode = false
     this._isTopFrame = (window.location === window.parent.location)
     this._isRecordingClicks = true
+    this.timeStamp = +new Date()
   }
 
   boot () {
@@ -35,6 +36,7 @@ export default class EventRecorder {
 
   _initializeRecorder () {
     const events = Object.values(eventsToRecord)
+    this.timeStamp = +new Date()
     if (!window.pptRecorderAddedControlListeners) {
       this._addAllListeners(events)
       this._boundedMessageListener = this._boundedMessageListener || this._handleBackgroundMessage.bind(this)
@@ -110,6 +112,7 @@ export default class EventRecorder {
         event: e,
         clientX: e.clientX,
         clientY: e.clientY,
+        timeDiff: +new Date() - this.timeStamp,
         coordinates: EventRecorder._getCoordinates(e)
       })
     } catch (e) {}

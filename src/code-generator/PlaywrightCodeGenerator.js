@@ -8,7 +8,14 @@ const header = `const browser = await chromium.launch()
   const context = await browser.newContext()
   const page = await context.newPage()`
 
-const footer = `await browser.close()`
+const footer = `
+  await await page.screenshot({
+    path: './output/${+new Date()}.png',  //图片保存路径
+    type: 'png',
+    fullPage: true
+  });
+
+  await browser.close()`
 
 const wrappedHeader = `(async () => {
   ${header}\n`

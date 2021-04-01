@@ -8,3 +8,4 @@ dist-zip
 *.crx
 test
 .vscode
+example
