@@ -1,6 +1,6 @@
 <template functional>
   <div class="checkly-badge text-muted">
-    powered by
+    Fork from
     <a href="https://checklyhq.com" target="_blank">
       <img src="/images/text_racoon_logo.svg" alt="Checkly logo">
     </a>

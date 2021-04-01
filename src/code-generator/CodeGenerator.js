@@ -40,14 +40,18 @@ export default class CodeGenerator {
     return this._options.wrapAsync ? this._wrappedFooter : this._footer
   }
 
+  /**
+   * TODO: 对点击事件进行优化，新增拖动事件
+   * @param {*} events 
+   * @returns 
+   */
   _parseEvents (events) {
     console.debug(`generating code for ${events ? events.length : 0} events`)
     let result = ''
 
     if (!events) return result
-
     for (let i = 0; i < events.length; i++) {
-      const { action, selector, value, href, keyCode, tagName, frameId, frameUrl } = events[i]
+      const { action, selector, value, href, keyCode, tagName, frameId, frameUrl, event, clientX, clientY } = events[i]
       const escapedSelector = selector ? selector.replace(/\\/g, '\\\\') : selector
 
       // we need to keep a handle on what frames events originate from
@@ -59,8 +63,14 @@ export default class CodeGenerator {
             this._blocks.push(this._handleKeyDown(escapedSelector, value, keyCode))
           }
           break
-        case 'click':
-          this._blocks.push(this._handleClick(escapedSelector, events))
+        case 'mousedown':
+          this._blocks.push(this._handleMouseDown(escapedSelector, event))
+          break
+        case 'mouseup':
+          this._blocks.push(this._handleMouseUp(escapedSelector, event))
+          break
+        case 'mousemove':
+          this._blocks.push(this._handleMouseMove(escapedSelector, clientX, clientY))
           break
         case 'change':
           if (tagName === 'SELECT') {
@@ -130,6 +140,33 @@ export default class CodeGenerator {
   _handleKeyDown (selector, value) {
     const block = new Block(this._frameId)
     block.addLine({ type: domEvents.KEYDOWN, value: `await ${this._frame}.type('${selector}', '${this._escapeUserInput(value)}')` })
+    return block
+  }
+
+  _handleMouseDown (selector, event) {
+    const block = new Block(this._frameId)
+    if (this._options.waitForSelectorOnClick) {
+      block.addLine({ type: domEvents.MOUSEDOWN, value: `await ${this._frame}.waitForSelector('${selector}')` })
+    }
+    block.addLine({ type: domEvents.CLICK, value: `await ${this._frame}.mousedown()` })
+    return block
+  }
+
+  _handleMouseUp (selector, event) {
+    const block = new Block(this._frameId)
+    if (this._options.waitForSelectorOnClick) {
+      block.addLine({ type: domEvents.MOUSEUP, value: `await ${this._frame}.waitForSelector('${selector}')` })
+    }
+    block.addLine({ type: domEvents.CLICK, value: `await ${this._frame}.mouseup()` })
+    return block
+  }
+
+  _handleMouseMove (selector, x, y) {
+    const block = new Block(this._frameId)
+    if (this._options.waitForSelectorOnClick) {
+      block.addLine({ type: domEvents.MOUSEMOVE, value: `await ${this._frame}.waitForSelector('${selector}')` })
+    }
+    block.addLine({ type: domEvents.CLICK, value: `await ${this._frame}.mousemove(${x},${y})` })
     return block
   }
 

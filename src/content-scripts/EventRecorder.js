@@ -96,7 +96,7 @@ export default class EventRecorder {
   _recordEvent (e) {
     if (this._previousEvent && this._previousEvent.timeStamp === e.timeStamp) return
     this._previousEvent = e
-
+    console.log(e)
     // we explicitly catch any errors and swallow them, as none node-type events are also ingested.
     // for these events we cannot generate selectors, which is OK
     try {
@@ -107,6 +107,9 @@ export default class EventRecorder {
         action: e.type,
         keyCode: e.keyCode ? e.keyCode : null,
         href: e.target.href ? e.target.href : null,
+        event: e,
+        clientX: e.clientX,
+        clientY: e.clientY,
         coordinates: EventRecorder._getCoordinates(e)
       })
     } catch (e) {}

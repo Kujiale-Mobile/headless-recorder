@@ -29,7 +29,7 @@ npm install puppeteer playwright
 node my-script.js</pre>
     </div>
     <div class="help-footer text-muted">
-      powered by
+      Fork from
       <a href="https://checklyhq.com" target="_blank">
         <img src="/images/text_racoon_logo.svg" alt="">
       </a>
