@@ -95,8 +95,8 @@ export default class CodeGenerator {
 
     if (this._hasNavigation && this._options.waitForNavigation) {
       console.debug('Adding navigationPromise declaration')
-      const block = new Block(this._frameId, { type: pptrActions.NAVIGATION_PROMISE, value: 'const navigationPromise = page.waitForNavigation()' })
-      this._blocks.unshift(block)
+      // const block = new Block(this._frameId, { type: pptrActions.NAVIGATION_PROMISE, value: 'const navigationPromise = page.waitForNavigation()' })
+      // this._blocks.unshift(block)
     }
 
     console.debug('post processing blocks:', this._blocks)
@@ -146,7 +146,7 @@ export default class CodeGenerator {
   _handleMouseDown (selector, event) {
     const block = new Block(this._frameId)
     if (this._options.waitForSelectorOnClick) {
-      block.addLine({ type: domEvents.MOUSEDOWN, value: `await ${this._frame}.waitForSelector('${selector}')` })
+      block.addLine({ type: domEvents.MOUSEDOWN, value: `await ${this._frame}.waitForSelectorPlus('${selector}')` })
     }
     block.addLine({ type: domEvents.CLICK, value: `await ${this._frame}.mouse.down()` })
     return block
@@ -155,7 +155,7 @@ export default class CodeGenerator {
   _handleMouseUp (selector, event) {
     const block = new Block(this._frameId)
     if (this._options.waitForSelectorOnClick) {
-      block.addLine({ type: domEvents.MOUSEUP, value: `await ${this._frame}.waitForSelector('${selector}')` })
+      block.addLine({ type: domEvents.MOUSEUP, value: `await ${this._frame}.waitForSelectorPlus('${selector}')` })
     }
     block.addLine({ type: domEvents.CLICK, value: `await ${this._frame}.mouse.up()` })
     return block
@@ -164,7 +164,7 @@ export default class CodeGenerator {
   _handleMouseMove (selector, x, y) {
     const block = new Block(this._frameId)
     if (this._options.waitForSelectorOnClick) {
-      block.addLine({ type: domEvents.MOUSEMOVE, value: `await ${this._frame}.waitForSelector('${selector}')` })
+      block.addLine({ type: domEvents.MOUSEMOVE, value: `await ${this._frame}.waitForSelectorPlus('${selector}')` })
     }
     block.addLine({ type: domEvents.CLICK, value: `await ${this._frame}.mouse.move(${x},${y})` })
     return block
@@ -173,7 +173,7 @@ export default class CodeGenerator {
   _handleClick (selector) {
     const block = new Block(this._frameId)
     if (this._options.waitForSelectorOnClick) {
-      block.addLine({ type: domEvents.CLICK, value: `await ${this._frame}.waitForSelector('${selector}')` })
+      block.addLine({ type: domEvents.CLICK, value: `await ${this._frame}.waitForSelectorPlus('${selector}')` })
     }
     block.addLine({ type: domEvents.CLICK, value: `await ${this._frame}.click('${selector}')` })
     return block
@@ -184,7 +184,21 @@ export default class CodeGenerator {
   }
 
   _handleGoto (href) {
-    return new Block(this._frameId, { type: pptrActions.GOTO, value: `await ${this._frame}.goto('${href}')` })
+    const gotoStr = `const navigationPromise = page.waitForNavigation({
+      waitUntil: 'domcontentloaded'
+    })
+    try {
+      await Promise.all([
+        page.goto('${href}', {
+          timeout: 0,
+          waitUntil: 'domcontentloaded'
+        }),
+        navigationPromise
+      ])
+    } catch (error) {
+      console.log(error.toString())
+    }`
+    return new Block(this._frameId, { type: pptrActions.GOTO, value: `${gotoStr}` })
   }
 
   _handleViewport (width, height) {
@@ -216,7 +230,7 @@ export default class CodeGenerator {
   _handleWaitForNavigation () {
     const block = new Block(this._frameId)
     if (this._options.waitForNavigation) {
-      block.addLine({type: pptrActions.NAVIGATION, value: `await navigationPromise`})
+      // block.addLine({type: pptrActions.NAVIGATION, value: `await navigationPromise`})
     }
     return block
   }

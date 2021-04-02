@@ -9,9 +9,20 @@ const page = await browser.newPage()`
 
 const footer = `await browser.close()`
 
+/**
+ * TODO: launch初始化 viewport设置宽高
+ */
 const wrappedHeader = `(async () => {
-  const browser = await puppeteer.launch()
-  const page = await browser.newPage()\n`
+  const browser = await puppeteer.launch({
+    headless: false,
+    defaultViewport: { width: 1440, height: 798 }
+  })
+  const page = await browser.newPage()
+  page.waitForSelectorPlus = (selector, time = 10000) => Promise.race([
+    page.waitForSelector(selector),
+    page.waitForTimeout(time)
+  ])
+  \n`
 
 const wrappedFooter = `
   await await page.screenshot({
