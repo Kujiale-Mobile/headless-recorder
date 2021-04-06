@@ -3,7 +3,7 @@
 exports[`App.vue it has the correct pristine / empty state 1`] = `
 <div
   class="recorder"
-  id="headless-recorder"
+  id="kool-recorder"
 >
   <div
     class="header"

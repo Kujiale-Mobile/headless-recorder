@@ -42,8 +42,8 @@ export default class CodeGenerator {
 
   /**
    * TODO: 对点击事件进行优化，新增拖动事件
-   * @param {*} events 
-   * @returns 
+   * @param {*} events
+   * @returns
    */
   _parseEvents (events) {
     console.debug(`generating code for ${events ? events.length : 0} events`)

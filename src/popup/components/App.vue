@@ -1,5 +1,5 @@
 <template>
-  <div id="headless-recorder" class="recorder">
+  <div id="kool-recorder" class="recorder">
     <div class="header">
       <a href="#" @click="goHome">
         Headless recorder <span class="text-muted"><small>{{version}}</small></span>

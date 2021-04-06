@@ -30,7 +30,7 @@ exports[`RecordingTab.vue it has the correct pristine / empty state 1`] = `
         class="nag-cta"
       >
         <a
-          href="https://checklyhq.com/headless-recorder"
+          href="https://checklyhq.com/kool-recorder"
           target="_blank"
         >
           Puppeteer Recorder is now 
@@ -92,7 +92,7 @@ exports[`RecordingTab.vue it has the correct recording DOM events state 1`] = `
         style="display: none;"
       >
         <a
-          href="https://checklyhq.com/headless-recorder"
+          href="https://checklyhq.com/kool-recorder"
           target="_blank"
         >
           Puppeteer Recorder is now 
@@ -183,7 +183,7 @@ exports[`RecordingTab.vue it has the correct recording Puppeteer custom events s
         style="display: none;"
       >
         <a
-          href="https://checklyhq.com/headless-recorder"
+          href="https://checklyhq.com/kool-recorder"
           target="_blank"
         >
           Puppeteer Recorder is now 
@@ -328,7 +328,7 @@ exports[`RecordingTab.vue it has the correct waiting for events state 1`] = `
         style="display: none;"
       >
         <a
-          href="https://checklyhq.com/headless-recorder"
+          href="https://checklyhq.com/kool-recorder"
           target="_blank"
         >
           Puppeteer Recorder is now 

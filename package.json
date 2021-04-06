@@ -1,5 +1,5 @@
 {
-  "name": "headless-recorder",
+  "name": "kool-recorder",
   "version": "0.8.2",
   "description": "A Chrome extension for recording browser interaction and generating Puppeteer & Playwright scripts",
   "main": "index.js",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/checkly/headless-recorder"
+    "url": "https://github.com/Kujiale-Mobile/kool-recorder"
   },
   "keywords": [
     "puppeteer",
@@ -21,9 +21,9 @@
   "author": "Tim Nolet",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/checkly/headless-recorder/issues"
+    "url": "https://github.com/Kujiale-Mobile/kool-recorder"
   },
-  "homepage": "https://github.com/checkly/headless-recorder#readme",
+  "homepage": "https://github.com/Kujiale-Mobile/kool-recorder#readme",
   "dependencies": {
     "@medv/finder": "^1.1.2",
     "events": "^3.2.0",
